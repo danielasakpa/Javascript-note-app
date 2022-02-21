@@ -67,11 +67,8 @@ document.querySelector("#ad-note-btn").addEventListener("click",  () => {
       dleLi.className = "list-btn";
       container.appendChild(dleLi);
       dleLi.addEventListener("click", deleteLi = () => {
-         noteHeader.remove()
-         newLi.remove();
-         dleLi.remove();
-         edLi.remove();
-         saveLi.remove();
+
+         container.remove()
   
       // TRACKING-noteNum
       isEmpty = id => {
