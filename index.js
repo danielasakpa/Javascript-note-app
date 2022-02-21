@@ -1,18 +1,61 @@
 var input = document.querySelector('#text-input');
+var ul = document.querySelector('#list-items');
+var noteNum = " ";
+
+ 
+// INCREMENTING-liNum
+noteLi = () =>  noteNum++;
+
+
 
 
 document.querySelector("#ad-note-btn").addEventListener("click",  () => {
+   // TO-PREVENT-EMPTY-NOTE
    if (input.value.length > 1) {
       // GET-INPUT-VALUE
       var getvalue = input.value;
+      var container = document.createElement("div")
+      ul.appendChild(container)
+     
+      // CALL-liNum
+      noteLi()
+
+      // GET-CURRENT-DATE
+      var today = new Date();
+
+      var currentDay = today.getDay();
+  
+      var day = " ";
+  
+      const options = {
+          weekday: "long",
+          day: "numeric",
+          month: "long"
+      }
+  
+      var day = today.toLocaleDateString("en-US", options)
+
+      // ADD-NOTE-DATE
+      const date = document.createElement("p")
+      date.textContent = day;
+      date.className = "notedate";
+      container.appendChild(date);
+
+
+      
+
+      // NOTE-HEADER
+      const noteHeader = document.createElement("h2")
+      noteHeader.textContent = noteNum + ":   " + getvalue;
+      noteHeader.className = "noteheader";
+      container.appendChild(noteHeader);
+
       // CREATE-NEW-NOTE
       const newLi = document.createElement("textarea");
-      newLi.value =  getvalue;
       newLi.className =  "note-li";
-      // ADD-NEW-NOTE
-      var ul = document.querySelector('#list-items');
-      ul.appendChild(newLi);
 
+      // ADD-NEW-NOTE
+      container.appendChild(newLi);
 
 
       // EMPTY-INPUT-WHEN-CREATING-NEW-NOTES
@@ -22,62 +65,66 @@ document.querySelector("#ad-note-btn").addEventListener("click",  () => {
       const dleLi = document.createElement("button");
       dleLi.textContent = "delete";
       dleLi.className = "list-btn";
-      ul.appendChild(dleLi);
-      dleLi.addEventListener("click", () => {
+      container.appendChild(dleLi);
+      dleLi.addEventListener("click", deleteLi = () => {
+         noteHeader.remove()
          newLi.remove();
          dleLi.remove();
          edLi.remove();
          saveLi.remove();
-     })
-    
-   //   EDIT-NOTES
-     const edit = () => {
-       if( newLi.value.length > 0 ) {
-          newLi.disabled = true; 
-       } else {
-          newLi.disabled = false; 
-       }
-     }
-    
-     edit()
-    
-    const edLi = document.createElement("button");
-    edLi.textContent = "Edit";
-    ul.appendChild(edLi);
-    edLi.className = "list-btn";
-    edLi.addEventListener("click", () => {
-       if ( newLi.disabled = true ) {
-          newLi.disabled = false; 
-       }else {
-          newLi.disabled = true; 
-       }
-    })
-    
+  
+      // TRACKING-noteNum
+      isEmpty = id => {
+         return document.querySelector(id).innerHTML.trim() == ""
+      }
+             
+      if (isEmpty('#list-items') == true) {
+         noteNum = " "
+      } else {
+         noteNum--
+      }
+             
+     });
+
+     //   EDIT-LIST
+     const edLi = document.createElement("button");
+     edLi.textContent = "Edit";
+     container.appendChild(edLi);
+     edLi.className = "list-btn";
+     edLi.addEventListener("click", () => {
+      newLi.disabled = false; 
+     });
+ 
+    //   SAVE-LIST
     const saveLi = document.createElement("button");
     saveLi.textContent = "save";
-    ul.appendChild(saveLi);
+    container.appendChild(saveLi);
     saveLi.className = "list-btn";
     saveLi.addEventListener("click", () => {
-       edit();
-    })
+       if (newLi.value.length > 1) {
+         newLi.disabled = true;
+      } else {
+         deleteLi()
+       }
+   });
 
-    var todoList = JSON.parse(localStorage.getItem('todo-list'));
-    todoList.push(newLi)
-    localStorage.setItem('todo-list', JSON.stringify(todoList));
-
-    
    } else {
       ul.appendChild();
    }
 
-
 })
 
- 
+
+
+
 document.querySelector("#clear-btn").addEventListener("click", () => {
    input.value = " ";
 })
 
 
+
+
+let el = document.getElementById('div-03').previousElementSibling;
+console.log(el);
 
 
